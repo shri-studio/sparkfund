@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>sparkfund — Plug-and-play donation widget</title>
+<meta name="description" content="The plug-and-play donation widget for developers. Razorpay + PayPal. Named tiers. Zero dependencies. Built by Shri Studio."/>
+<meta property="og:title" content="sparkfund — donation widget for developers"/>
+<meta property="og:description" content="Razorpay + PayPal · Named tiers · Zero deps · One script tag"/>
+<meta property="og:url" content="https://shri-studio.github.io/sparkfund/"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#7C3AED;--purple-soft:#ede9fe;--purple-mid:#c4b5fd;
+  --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;
+  --gray-500:#6b7280;--gray-900:#111827;
+  --radius:14px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',system-ui,sans-serif;background:#fafafa;color:var(--gray-900)}
+
+nav{background:#fff;border-bottom:1px solid var(--gray-200);padding:.9rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;gap:1rem;flex-wrap:wrap;}
+.nav-logo{font-family:'Sora',sans-serif;font-weight:800;font-size:16px;
+  color:var(--purple);display:flex;align-items:center;gap:8px;}
+.nav-logo span{font-size:20px;}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-link{font-size:13px;font-weight:600;color:var(--gray-500);text-decoration:none;}
+.nav-link:hover{color:var(--purple)}
+.nav-shri{font-size:13px;font-weight:700;color:var(--purple);text-decoration:none;
+  border:1.5px solid var(--purple-mid);border-radius:8px;padding:6px 12px;transition:background .15s;}
+.nav-shri:hover{background:var(--purple-soft)}
+.nav-gh{display:flex;align-items:center;gap:6px;background:var(--gray-900);color:#fff;
+  border-radius:8px;padding:7px 14px;font-size:13px;font-weight:700;text-decoration:none;transition:opacity .15s;}
+.nav-gh:hover{opacity:.85}
+
+/* HERO */
+.hero{max-width:700px;margin:5rem auto 3.5rem;padding:0 1.5rem;text-align:center;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;background:var(--purple-soft);
+  color:var(--purple);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;
+  margin-bottom:1.5rem;letter-spacing:.03em;}
+.hero h1{font-family:'Sora',sans-serif;font-size:clamp(34px,6vw,56px);font-weight:800;
+  line-height:1.08;margin-bottom:1.25rem;letter-spacing:-.02em;}
+.hero h1 em{font-style:normal;color:var(--purple);}
+.hero p{font-size:17px;color:var(--gray-500);max-width:520px;margin:0 auto 2.5rem;line-height:1.7;}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-bottom:2.5rem;}
+.btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--purple);color:#fff;
+  border:none;border-radius:10px;padding:13px 24px;font-size:15px;font-weight:700;
+  cursor:pointer;font-family:inherit;text-decoration:none;transition:opacity .15s;}
+.btn-p:hover{opacity:.9;}
+.btn-s{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--gray-900);
+  border:1.5px solid var(--gray-200);border-radius:10px;padding:12px 22px;font-size:15px;
+  font-weight:700;text-decoration:none;transition:border-color .15s;}
+.btn-s:hover{border-color:var(--purple);}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.tag{font-size:12px;font-weight:600;background:var(--gray-100);color:var(--gray-500);
+  border-radius:6px;padding:4px 10px;}
+
+/* SECTIONS */
+.section{max-width:800px;margin:0 auto 5rem;padding:0 1.5rem;}
+.sec-eyebrow{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;
+  color:#a1a1aa;margin-bottom:1rem;}
+.sec-title{font-family:'Sora',sans-serif;font-size:clamp(22px,3vw,30px);font-weight:700;
+  margin-bottom:.75rem;letter-spacing:-.01em;}
+.sec-sub{font-size:15px;color:var(--gray-500);margin-bottom:2rem;line-height:1.7;}
+
+/* COMPARE TABLE */
+.compare{width:100%;border-collapse:collapse;font-size:14px;}
+.compare th{text-align:left;padding:10px 14px;font-size:12px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;color:#a1a1aa;border-bottom:1px solid var(--gray-200);}
+.compare td{padding:11px 14px;border-bottom:1px solid var(--gray-100);vertical-align:middle;}
+.compare tr:last-child td{border-bottom:none;}
+.compare td:first-child{font-weight:600;color:var(--gray-900);}
+.compare .hl td{background:var(--purple-soft);}
+.compare .hl td:first-child{color:var(--purple);border-radius:8px 0 0 8px;}
+.compare .hl td:last-child{border-radius:0 8px 8px 0;}
+.yes{color:#16a34a;font-weight:700;}
+.no{color:#dc2626;}
+.wrap-table{border:1px solid var(--gray-200);border-radius:var(--radius);overflow:hidden;}
+
+/* DEMO CARD */
+.demo-card{background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-radius:var(--radius);
+  padding:2.5rem 2rem;text-align:center;border:1px solid var(--purple-mid);margin-bottom:1.5rem;}
+.demo-card h3{font-family:'Sora',sans-serif;font-size:21px;font-weight:700;color:#4c1d95;margin-bottom:.5rem;}
+.demo-card p{font-size:14px;color:#6d28d9;margin-bottom:1.75rem;}
+.demo-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;align-items:center;}
+
+/* THEME SWATCHES */
+.theme-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1.5rem;}
+.swatch{width:40px;height:40px;border-radius:10px;cursor:pointer;
+  transition:transform .15s,box-shadow .15s;border:2px solid transparent;}
+.swatch:hover{transform:scale(1.12);box-shadow:0 4px 12px rgba(0,0,0,.15);}
+.swatch.active{border-color:#111;transform:scale(1.12);}
+
+/* TIERS PREVIEW */
+.tiers-preview{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1.5rem;}
+.tier-prev{background:#fff;border:1.5px solid var(--gray-200);border-radius:12px;
+  padding:1rem;text-align:center;}
+.tier-emoji{font-size:28px;display:block;margin-bottom:6px;}
+.tier-name{font-size:13px;font-weight:700;margin-bottom:2px;}
+.tier-price{font-size:12px;color:var(--purple);font-weight:600;}
+
+/* CODE */
+.code-card{background:#13111c;border-radius:var(--radius);overflow:hidden;margin-bottom:1rem;}
+.code-head{background:#1e1a2e;padding:.65rem 1.1rem;display:flex;align-items:center;justify-content:space-between;}
+.code-lang{font-size:11px;font-weight:700;color:#7c6f9f;text-transform:uppercase;letter-spacing:.06em;}
+.copy-btn{font-size:11px;font-weight:600;color:#a78bfa;background:none;border:none;cursor:pointer;padding:2px 6px;}
+.copy-btn:hover{color:#c4b5fd;}
+.code-body{padding:1.25rem 1.4rem;overflow-x:auto;}
+.code-body code{font-family:'Fira Code','Courier New',monospace;font-size:13px;line-height:1.9;
+  color:#e2e8f0;white-space:pre;}
+.tc{color:#6272a4}.tt{color:#89b4fa}.ta{color:#cba6f7}
+.tv{color:#a6e3a1}.tk{color:#89dceb}.ts{color:#f1fa8c}.te{color:#fab387}
+
+/* COMPAT */
+.compat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;}
+.compat{background:#fff;border:1px solid var(--gray-200);border-radius:10px;
+  padding:1rem;text-align:center;transition:border-color .15s;}
+.compat:hover{border-color:var(--purple-mid);}
+.compat-icon{font-size:26px;margin-bottom:6px;}
+.compat-name{font-size:13px;font-weight:700;margin-bottom:2px;}
+.compat-note{font-size:11px;color:#a1a1aa;}
+
+/* BUILT BY */
+.built-by{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);
+  padding:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;}
+.built-avatar{width:52px;height:52px;border-radius:12px;background:var(--purple);
+  display:flex;align-items:center;justify-content:center;font-family:'Sora',sans-serif;
+  font-weight:800;font-size:18px;color:#fff;flex-shrink:0;}
+.built-info h4{font-size:16px;font-weight:700;margin-bottom:2px;}
+.built-info p{font-size:13px;color:var(--gray-500);}
+.built-info a{color:var(--purple);font-weight:700;text-decoration:none;}
+.built-info a:hover{text-decoration:underline;}
+
+footer{border-top:1px solid var(--gray-200);padding:2rem;text-align:center;
+  font-size:13px;color:#a1a1aa;}
+footer a{color:var(--purple);font-weight:600;text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span>⚡</span> sparkfund</div>
+  <div class="nav-right">
+    <a class="nav-link" href="#demo">Demo</a>
+    <a class="nav-link" href="#tiers">Tiers</a>
+    <a class="nav-link" href="#themes">Themes</a>
+    <a class="nav-shri" href="https://shri.life" target="_blank">shri.life ↗</a>
+    <a class="nav-gh" href="https://github.com/shri-studio/sparkfund" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      Star on GitHub
+    </a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">⚡ Zero dependencies · MIT · India-first</div>
+  <h1>Donations for<br><em>every project</em></h1>
+  <p>One script tag. Razorpay for India (UPI, cards, wallets) + PayPal for global. Named contribution tiers. Auto-detects your visitor's location.</p>
+  <div class="hero-cta">
+    <button class="btn-p" onclick="window.SparkFund?.open()">⚡ Try the widget</button>
+    <a class="btn-s" href="https://github.com/shri-studio/sparkfund" target="_blank">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+      View on GitHub
+    </a>
+  </div>
+  <div class="hero-tags">
+    <span class="tag">🇮🇳 Razorpay — UPI + cards</span>
+    <span class="tag">🌍 PayPal — global</span>
+    <span class="tag">☕ Named tiers</span>
+    <span class="tag">🎨 6 theme presets</span>
+    <span class="tag">🎯 Goal tracker</span>
+    <span class="tag">📱 Android WebView</span>
+  </div>
+</div>
+
+<!-- LIVE DEMO -->
+<div class="section" id="demo">
+  <div class="sec-eyebrow">Live demo</div>
+  <div class="demo-card">
+    <h3>Try it right now</h3>
+    <p>Click either button — the full widget opens with named tiers, goal bar, and payment options.</p>
+    <div class="demo-row">
+      <spark-button label="♥ Support this project"></spark-button>
+      <button onclick="document.querySelector('spark-float button').click()"
+        style="background:#fff;color:#7C3AED;border:2px solid #c4b5fd;border-radius:10px;
+        padding:10px 18px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">
+        Trigger floating button ↗
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- WHY -->
+<div class="section">
+  <div class="sec-eyebrow">Why sparkfund</div>
+  <div class="wrap-table">
+    <table class="compare">
+      <thead><tr>
+        <th>Feature</th><th>Ko-fi / BMC</th><th>GitHub Sponsors</th><th>sparkfund</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>Platform cut</td><td>5–9%</td><td>0%</td><td class="yes">0%</td></tr>
+        <tr class="hl"><td>⚡ UPI / Razorpay</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓ Native</td></tr>
+        <tr><td>Self-hosted</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+        <tr class="hl"><td>☕ Named tiers</td><td>Limited</td><td class="no">✗</td><td class="yes">✓ Fully custom</td></tr>
+        <tr><td>Android WebView</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+        <tr><td>Any website</td><td class="yes">✓</td><td class="no">GitHub only</td><td class="yes">✓</td></tr>
+        <tr><td>Zero dependencies</td><td class="no">✗</td><td class="no">✗</td><td class="yes">✓</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TIERS -->
+<div class="section" id="tiers">
+  <div class="sec-eyebrow">Named tiers</div>
+  <div class="sec-title">Give contributions a personality</div>
+  <div class="sec-sub">Instead of boring amounts, each tier has a name, emoji, and story. Set defaults or fully customize per project.</div>
+  <div class="tiers-preview">
+    <div class="tier-prev"><span class="tier-emoji">☕</span><div class="tier-name">Chai</div><div class="tier-price">₹100 · $2</div></div>
+    <div class="tier-prev"><span class="tier-emoji">🍱</span><div class="tier-name">Lunch</div><div class="tier-price">₹500 · $10</div></div>
+    <div class="tier-prev"><span class="tier-emoji">🖥️</span><div class="tier-name">Server</div><div class="tier-price">₹1000 · $20</div></div>
+    <div class="tier-prev"><span class="tier-emoji">🚀</span><div class="tier-name">Rocket</div><div class="tier-price">₹2000 · $50</div></div>
+  </div>
+  <div class="code-card">
+    <div class="code-head"><span class="code-lang">JS</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><code><span class="tk">window.SparkFund</span> = {
+  <span class="ta">tiers</span>: [
+    { <span class="ta">emoji</span>: <span class="tv">"☕"</span>, <span class="ta">label</span>: <span class="tv">"Chai"</span>,   <span class="ta">amountINR</span>: <span class="ts">100</span>,  <span class="ta">amountUSD</span>: <span class="ts">2</span>  },
+    { <span class="ta">emoji</span>: <span class="tv">"🍱"</span>, <span class="ta">label</span>: <span class="tv">"Lunch"</span>,  <span class="ta">amountINR</span>: <span class="ts">500</span>,  <span class="ta">amountUSD</span>: <span class="ts">10</span> },
+    { <span class="ta">emoji</span>: <span class="tv">"🖥️"</span>, <span class="ta">label</span>: <span class="tv">"Server"</span>, <span class="ta">amountINR</span>: <span class="ts">1000</span>, <span class="ta">amountUSD</span>: <span class="ts">20</span> },
+    { <span class="ta">emoji</span>: <span class="tv">"🚀"</span>, <span class="ta">label</span>: <span class="tv">"Rocket"</span>, <span class="ta">amountINR</span>: <span class="ts">2000</span>, <span class="ta">amountUSD</span>: <span class="ts">50</span> },
+  ],
+};</code></div>
+  </div>
+</div>
+
+<!-- THEMES -->
+<div class="section" id="themes">
+  <div class="sec-eyebrow">Theming</div>
+  <div class="sec-title">6 presets or go fully custom</div>
+  <div class="sec-sub">Pick a preset, drop in a hex color, or override individual CSS variables.</div>
+  <div class="theme-grid">
+    <div class="swatch active" style="background:#7C3AED" onclick="applyTheme('purple',this)" title="purple"></div>
+    <div class="swatch" style="background:#059669" onclick="applyTheme('green',this)" title="green"></div>
+    <div class="swatch" style="background:#0284c7" onclick="applyTheme('ocean',this)" title="ocean"></div>
+    <div class="swatch" style="background:#e11d48" onclick="applyTheme('rose',this)" title="rose"></div>
+    <div class="swatch" style="background:#d97706" onclick="applyTheme('amber',this)" title="amber"></div>
+    <div class="swatch" style="background:#18181b" onclick="applyTheme('dark',this)" title="dark"></div>
+  </div>
+  <div class="code-card">
+    <div class="code-head"><span class="code-lang">JS</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><code><span class="tc">// Preset theme</span>
+<span class="tk">window.SparkFund</span> = { <span class="ta">theme</span>: <span class="tv">"purple"</span> };
+
+<span class="tc">// Custom color</span>
+<span class="tk">window.SparkFund</span> = { <span class="ta">accentColor</span>: <span class="tv">"#e11d48"</span> };
+
+<span class="tc">// Full CSS control</span>
+<span class="tk">window.SparkFund</span> = {
+  <span class="ta">cssVars</span>: {
+    <span class="tv">"--sf-accent"</span>:      <span class="tv">"#e11d48"</span>,
+    <span class="tv">"--sf-accent-soft"</span>: <span class="tv">"#ffe4e6"</span>,
+    <span class="tv">"--sf-radius"</span>:      <span class="tv">"6px"</span>,
+  }
+};</code></div>
+  </div>
+</div>
+
+<!-- QUICK START CODE -->
+<div class="section">
+  <div class="sec-eyebrow">Quick start</div>
+  <div class="code-card">
+    <div class="code-head"><span class="code-lang">HTML</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+    <div class="code-body"><code><span class="tc">&lt;!-- 1. Config --&gt;</span>
+<span class="tt">&lt;script&gt;</span>
+  <span class="tk">window.SparkFund</span> = {
+    <span class="ta">projectName</span>:    <span class="tv">"My App"</span>,
+    <span class="ta">projectTagline</span>: <span class="tv">"Keep this free 🙏"</span>,
+    <span class="ta">razorpayKey</span>:    <span class="tv">"rzp_live_xxxx"</span>,
+    <span class="ta">paypalMe</span>:       <span class="tv">"https://paypal.me/yourname"</span>,
+    <span class="ta">theme</span>:          <span class="tv">"purple"</span>,
+    <span class="ta">goalINR</span>:        <span class="ts">50000</span>, <span class="ta">raisedINR</span>: <span class="ts">12500</span>,
+  };
+<span class="tt">&lt;/script&gt;</span>
+
+<span class="tc">&lt;!-- 2. Load --&gt;</span>
+<span class="tt">&lt;script <span class="ta">src</span>=<span class="tv">"https://cdn.jsdelivr.net/gh/shri-studio/sparkfund@latest/sparkfund.js"</span>&gt;&lt;/script&gt;</span>
+
+<span class="tc">&lt;!-- 3. Buttons --&gt;</span>
+<span class="tt">&lt;spark-button&gt;&lt;/spark-button&gt;</span>
+<span class="tt">&lt;spark-float&gt;&lt;/spark-float&gt;</span></code></div>
+  </div>
+</div>
+
+<!-- COMPAT -->
+<div class="section">
+  <div class="sec-eyebrow">Works everywhere</div>
+  <div class="compat-grid">
+    <div class="compat"><div class="compat-icon">📄</div><div class="compat-name">Plain HTML</div><div class="compat-note">Any static site</div></div>
+    <div class="compat"><div class="compat-icon">⚛️</div><div class="compat-name">React</div><div class="compat-note">+ Next.js, Remix</div></div>
+    <div class="compat"><div class="compat-icon">💚</div><div class="compat-name">Vue</div><div class="compat-note">+ Nuxt</div></div>
+    <div class="compat"><div class="compat-icon">🔴</div><div class="compat-name">Angular</div><div class="compat-note">via script tag</div></div>
+    <div class="compat"><div class="compat-icon">🤖</div><div class="compat-name">Android</div><div class="compat-note">WebView ready</div></div>
+    <div class="compat"><div class="compat-icon">🍎</div><div class="compat-name">iOS</div><div class="compat-note">WKWebView</div></div>
+    <div class="compat"><div class="compat-icon">🦕</div><div class="compat-name">WordPress</div><div class="compat-note">HTML block</div></div>
+    <div class="compat"><div class="compat-icon">🔷</div><div class="compat-name">Webflow</div><div class="compat-note">Embed block</div></div>
+  </div>
+</div>
+
+<!-- BUILT BY -->
+<div class="section">
+  <div class="built-by">
+    <div class="built-avatar">S</div>
+    <div class="built-info">
+      <h4>Built by Shri Studio</h4>
+      <p>Building tools for indie developers. · <a href="https://shri.life" target="_blank">shri.life</a> · <a href="https://github.com/shri-studio" target="_blank">github.com/shri-studio</a></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>MIT License · <a href="https://github.com/shri-studio/sparkfund">GitHub</a> · Built by <a href="https://shri.life">shri.life</a></p>
+</footer>
+
+<script>
+  const THEMES = {
+    purple: { accent:'#7C3AED', soft:'#ede9fe' },
+    green:  { accent:'#059669', soft:'#d1fae5' },
+    ocean:  { accent:'#0284c7', soft:'#e0f2fe' },
+    rose:   { accent:'#e11d48', soft:'#ffe4e6' },
+    amber:  { accent:'#d97706', soft:'#fef3c7' },
+    dark:   { accent:'#18181b', soft:'#f4f4f5' },
+  };
+
+  function applyTheme(name, el) {
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+    el.classList.add('active');
+    const t = THEMES[name];
+    document.documentElement.style.setProperty('--sf-accent', t.accent);
+    document.documentElement.style.setProperty('--sf-accent-soft', t.soft);
+  }
+
+  function copyCode(btn) {
+    const code = btn.closest('.code-card').querySelector('code').innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+  }
+
+  window.SparkFund = {
+    projectName:    "Support My Work",
+    projectTagline: "Your contribution keeps this alive",
+    razorpayKey:    "",
+    paypalMe:       "",
+    tiers: [
+      { emoji: "☕", label: "Chai",   amountINR: 100,  amountUSD: 2  },
+      { emoji: "🍱", label: "Lunch",  amountINR: 500,  amountUSD: 10 },
+      { emoji: "🖥️", label: "Server", amountINR: 1000, amountUSD: 20 },
+      { emoji: "🚀", label: "Rocket", amountINR: 2000, amountUSD: 50 },
+    ],
+    goalINR: 50000, raisedINR: 18500,
+    goalUSD: 500,   raisedUSD: 185,
+    theme: "purple",
+  };
+</script>
+<script src="../sparkfund.js"></script>
+<spark-float label="Support this project"></spark-float>
+
+</body>
+</html>
