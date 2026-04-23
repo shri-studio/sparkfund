@@ -41,12 +41,11 @@
 
   /* DARK MODE */
   function initDark() {
-    const set = d => { S.isDark=d; document.documentElement.setAttribute('data-sf-dark',d?'1':'0'); };
-    if (CFG.darkMode==='dark') { set(true); return; }
-    if (CFG.darkMode==='light') { set(false); return; }
+    if (CFG.darkMode==='dark') { S.isDark=true; return; }
+    if (CFG.darkMode==='light') { S.isDark=false; return; }
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    set(mq.matches);
-    mq.addEventListener('change', e => { set(e.matches); refresh(); });
+    S.isDark = mq.matches;
+    mq.addEventListener('change', e => { S.isDark=e.matches; if(S.overlay) S.overlay.classList.toggle('sf-dark',S.isDark); refresh(); });
   }
 
   /* GEO */
@@ -173,17 +172,25 @@
       --sf-text:#111827;--sf-text2:#71717a;--sf-text3:#a1a1aa;--sf-ob:rgba(0,0,0,.6);}
     [data-sf-dark="1"]{--sf-bg:#18181b;--sf-bg2:#27272a;--sf-bg3:#3f3f46;--sf-border:#3f3f46;
       --sf-text:#fafafa;--sf-text2:#a1a1aa;--sf-text3:#71717a;--sf-ob:rgba(0,0,0,.78);}
-    [data-sf-dark="1"] .sf-modal{background:#18181b;color:#fafafa;}
-    [data-sf-dark="1"] .sf-tier{background:#27272a;border-color:#3f3f46;}
-    [data-sf-dark="1"] .sf-tier-label{color:#fafafa;}
-    [data-sf-dark="1"] .sf-custom{background:#27272a;border-color:#3f3f46;color:#fafafa;}
-    [data-sf-dark="1"] .sf-input{background:#27272a;border-color:#3f3f46;color:#fafafa;}
-    [data-sf-dark="1"] .sf-pay-opt{background:#27272a;border-color:#3f3f46;}
-    [data-sf-dark="1"] .sf-pay-name{color:#fafafa;}
-    [data-sf-dark="1"] .sf-close,.sf-dark-toggle{background:#3f3f46;}
-    [data-sf-dark="1"] .sf-share-btn{background:#27272a;border-color:#3f3f46;color:#fafafa;}
-    [data-sf-dark="1"] .sf-success-title{color:#fafafa;}
-    [data-sf-dark="1"] .sf-title{color:#fafafa;}
+    .sf-overlay.sf-dark .sf-modal{background:#18181b !important;color:#fafafa !important;}
+    .sf-overlay.sf-dark .sf-tier{background:#27272a !important;border-color:#3f3f46 !important;}
+    .sf-overlay.sf-dark .sf-tier-label{color:#fafafa !important;}
+    .sf-overlay.sf-dark .sf-custom{background:#27272a !important;border-color:#3f3f46 !important;color:#fafafa !important;}
+    .sf-overlay.sf-dark .sf-input{background:#27272a !important;border-color:#3f3f46 !important;color:#fafafa !important;}
+    .sf-overlay.sf-dark .sf-pay-opt{background:#27272a !important;border-color:#3f3f46 !important;}
+    .sf-overlay.sf-dark .sf-pay-name{color:#fafafa !important;}
+    .sf-overlay.sf-dark .sf-close{background:#3f3f46 !important;}
+    .sf-overlay.sf-dark .sf-dark-toggle{background:#3f3f46 !important;}
+    .sf-overlay.sf-dark .sf-share-btn{background:#27272a !important;border-color:#3f3f46 !important;color:#fafafa !important;}
+    .sf-overlay.sf-dark .sf-success-title{color:#fafafa !important;}
+    .sf-overlay.sf-dark .sf-title{color:#fafafa !important;}
+    .sf-overlay.sf-dark .sf-sub{color:#a1a1aa !important;}
+    .sf-overlay.sf-dark .sf-loc-txt{color:#a1a1aa !important;}
+    .sf-overlay.sf-dark .sf-goal-label{color:#a1a1aa !important;}
+    .sf-overlay.sf-dark .sf-pay-desc{color:#a1a1aa !important;}
+    .sf-overlay.sf-dark .sf-goal-track{background:#3f3f46 !important;}
+    .sf-overlay.sf-dark .sf-success-sub{color:#a1a1aa !important;}
+    .sf-overlay.sf-dark .sf-success-close{border-color:#3f3f46 !important;color:#a1a1aa !important;}
     .sf-overlay{position:fixed;inset:0;z-index:2147483647;background:var(--sf-ob);
       display:flex;align-items:center;justify-content:center;padding:1rem;
       opacity:0;pointer-events:none;transition:opacity .22s;
@@ -363,7 +370,7 @@
       });
       return;
     }
-    $('#sf-dark-toggle')&&($('#sf-dark-toggle').onclick=()=>{S.isDark=!S.isDark;document.documentElement.setAttribute('data-sf-dark',S.isDark?'1':'0');refresh();});
+    $('#sf-dark-toggle')&&($('#sf-dark-toggle').onclick=()=>{S.isDark=!S.isDark;S.overlay.classList.toggle('sf-dark',S.isDark);refresh();});
     $('#sf-sw')&&($('#sf-sw').onclick=()=>{S.isIndia=!S.isIndia;S.tierIdx=1;S.customAmt='';S.method=S.isIndia?'razorpay':'paypal';refresh();});
     o.querySelectorAll('.sf-tier').forEach(el=>{el.onclick=()=>{S.tierIdx=parseInt(el.dataset.tier);S.customAmt='';refresh();};});
     const ci=$('#sf-custom');if(ci)ci.oninput=()=>{S.customAmt=ci.value;S.tierIdx=null;updateCTA();};
