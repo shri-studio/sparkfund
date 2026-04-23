@@ -201,13 +201,13 @@
       box-shadow:0 32px 80px rgba(0,0,0,.22);border:1px solid var(--sf-border);
       transform:translateY(24px) scale(.96);transition:transform .28s cubic-bezier(.34,1.56,.64,1);}
     .sf-overlay.sf-open .sf-modal{transform:none;}
-    .sf-close,.sf-dark-toggle{position:absolute;top:1rem;background:#f4f4f5;border:none;
+    .sf-close,.sf-dark-toggle{position:absolute !important;top:1rem !important;background:#f4f4f5 !important;border:none !important;
       border-radius:50%;width:30px;height:30px;cursor:pointer;color:var(--sf-text2);
       display:flex;align-items:center;justify-content:center;font-size:15px;transition:background .15s;}
     .sf-close{right:1rem;} .sf-dark-toggle{right:3.25rem;}
     .sf-close:hover,.sf-dark-toggle:hover{background:#e4e4e7;}
     .sf-head{margin-bottom:1.25rem;padding-right:5rem;}
-    .sf-title{font-size:19px;font-weight:700;color:#111827;margin:0 0 3px;}
+    .sf-title{font-size:19px !important;font-weight:700 !important;color:#111827 !important;margin:0 0 3px !important;}
     .sf-sub{font-size:13px;color:#6b7280;margin:0;}
     .sf-goal{margin-bottom:1.25rem;}
     .sf-goal-row{display:flex;justify-content:space-between;margin-bottom:5px;}
@@ -219,42 +219,37 @@
     .sf-loc-flag{font-size:17px;} .sf-loc-txt{font-size:13px;color:#6b7280;flex:1;}
     .sf-loc-sw{font-size:12px;font-weight:700;color:var(--sf-accent);cursor:pointer;text-decoration:underline;}
     .sf-tiers{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:1rem;}
-    .sf-tier{border:1.5px solid #e4e4e7;border-radius:12px;padding:12px 10px;
-      cursor:pointer;background:#ffffff;text-align:center;transition:all .15s;position:relative;}
-    .sf-tier:hover,.sf-tier.active{border-color:var(--sf-accent);}
-    .sf-tier.active{background:var(--sf-accent-soft);}
+    .sf-tier{border:1.5px solid #e4e4e7 !important;border-radius:12px !important;padding:12px 10px !important;cursor:pointer !important;background:#ffffff !important;text-align:center !important;transition:all .15s;position:relative !important;}
+    .sf-tier:hover,.sf-tier.active{border-color:var(--sf-accent) !important;}
+    .sf-tier.active{background:var(--sf-accent-soft) !important;}
     .sf-tier-emoji{font-size:22px;display:block;margin-bottom:4px;line-height:1;}
-    .sf-tier-label{font-size:13px;font-weight:700;color:#111827;display:block;margin-bottom:2px;}
-    .sf-tier-amt{font-size:12px;color:var(--sf-accent);font-weight:600;}
+    .sf-tier-label{font-size:13px !important;font-weight:700 !important;color:#111827 !important;display:block !important;margin-bottom:2px !important;}
+    .sf-tier-amt{font-size:12px !important;color:var(--sf-accent) !important;font-weight:600 !important;}
     .sf-popular{position:absolute;top:-9px;left:50%;transform:translateX(-50%);
       background:var(--sf-accent);color:#fff;font-size:9px;font-weight:700;
       border-radius:99px;padding:2px 8px;white-space:nowrap;}
     .sf-custom-row{display:flex;align-items:flex-start;gap:8px;margin-bottom:1rem;}
     .sf-sym{font-size:16px;font-weight:700;color:#111827;margin-top:10px;}
     .sf-custom-wrap{flex:1;}
-    .sf-custom{width:100%;border:1.5px solid #e4e4e7;border-radius:10px;
-      padding:10px 12px;font-size:15px;color:#111827;background:#ffffff;
-      outline:none;font-family:inherit;transition:border-color .15s;}
+    .sf-custom{width:100% !important;border:1.5px solid #e4e4e7 !important;border-radius:10px !important;padding:10px 12px !important;font-size:15px !important;color:#111827 !important;background:#ffffff !important;outline:none !important;font-family:inherit !important;transition:border-color .15s;}
     .sf-custom:focus{border-color:var(--sf-accent);}
     .sf-custom-hint{font-size:11px;color:#a1a1aa;margin-top:4px;display:block;}
     .sf-contributor{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem;}
     .sf-field{display:flex;flex-direction:column;gap:3px;}
     .sf-field label{font-size:11px;font-weight:600;color:#a1a1aa;text-transform:uppercase;letter-spacing:.05em;}
-    .sf-input{border:1.5px solid #e4e4e7;border-radius:9px;padding:9px 11px;
-      font-size:13px;color:#111827;background:#ffffff;outline:none;font-family:inherit;transition:border-color .15s;}
+    .sf-input{border:1.5px solid #e4e4e7 !important;border-radius:9px !important;padding:9px 11px !important;font-size:13px !important;color:#111827 !important;background:#ffffff !important;outline:none !important;font-family:inherit !important;transition:border-color .15s;}
     .sf-input:focus{border-color:var(--sf-accent);}
     .sf-input::placeholder,.sf-custom::placeholder{color:#a1a1aa;}
     .sf-pay-label{font-size:11px;font-weight:700;text-transform:uppercase;
       letter-spacing:.08em;color:#a1a1aa;margin-bottom:8px;}
     .sf-pay-opts{display:flex;flex-direction:column;gap:8px;margin-bottom:1.4rem;}
-    .sf-pay-opt{display:flex;align-items:center;gap:12px;border:1.5px solid #e4e4e7;
-      border-radius:12px;padding:11px 13px;cursor:pointer;background:#ffffff;transition:all .15s;}
+    .sf-pay-opt{display:flex !important;align-items:center !important;gap:12px !important;border:1.5px solid #e4e4e7 !important;border-radius:12px !important;padding:11px 13px !important;cursor:pointer !important;background:#ffffff !important;transition:all .15s;}
     .sf-pay-opt:hover,.sf-pay-opt.active{border-color:var(--sf-accent);}
     .sf-pay-opt.active{background:var(--sf-accent-soft);}
     .sf-pay-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;
       justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;color:#fff;}
     .sf-pay-info{flex:1;}
-    .sf-pay-name{font-size:14px;font-weight:700;color:#111827;margin:0 0 1px;}
+    .sf-pay-name{font-size:14px !important;font-weight:700 !important;color:#111827 !important;margin:0 0 1px !important;}
     .sf-pay-desc{font-size:11px;color:#6b7280;margin:0;}
     .sf-pay-badge{font-size:10px;font-weight:700;border-radius:5px;padding:2px 7px;flex-shrink:0;}
     .sf-radio{width:17px;height:17px;border-radius:50%;border:2px solid #d4d4d8;flex-shrink:0;transition:all .15s;}
@@ -432,12 +427,32 @@
   function init(){
     initDark();
     const vars=Object.assign({'--sf-accent':ACCENT,'--sf-accent-soft':ACCENT_SOFT,'--sf-radius':'16px','--sf-radius-sm':'10px'},CFG.cssVars);
+    const cssVarStr=Object.entries(vars).map(([k,v])=>k+':'+v).join(';');
+
+    // Shadow DOM host — fully isolates widget from host page CSS
+    const host=document.createElement('div');
+    host.id='sf-shadow-host';
+    host.style.cssText='position:fixed;inset:0;z-index:2147483647;pointer-events:none;font-size:16px;';
+    document.body.appendChild(host);
+    const shadow=host.attachShadow({mode:'open'});
+
+    // Inject font link into shadow
+    const fontLink=document.createElement('link');
+    fontLink.rel='stylesheet';
+    fontLink.href='https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap';
+    shadow.appendChild(fontLink);
+
+    // Inject all styles scoped to shadow
     const style=document.createElement('style');
-    style.textContent=`:root{${Object.entries(vars).map(([k,v])=>`${k}:${v}`).join(';')}}\n${CSS}`;
-    document.head.appendChild(style);
+    style.textContent=`:host{${cssVarStr}} :host *{box-sizing:border-box;}
+${CSS}`;
+    shadow.appendChild(style);
+
     const ov=document.createElement('div');ov.className='sf-overlay';
     ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');
-    ov.innerHTML='<div id="sf-inner"></div>';document.body.appendChild(ov);S.overlay=ov;
+    ov.style.cssText='pointer-events:all;';
+    ov.innerHTML='<div id="sf-inner"></div>';
+    shadow.appendChild(ov);S.overlay=ov;S.shadow=shadow;
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('sf-open'))close();});
     Promise.all([detectLocation(),syncGoal()]).then(()=>{S.method=S.isIndia?'razorpay':'paypal';updateWalls();});
     if(!customElements.get('spark-button'))customElements.define('spark-button',class extends HTMLElement{connectedCallback(){const b=document.createElement('button');b.className='sf-inline-btn';b.textContent=this.getAttribute('label')||CFG.inlineLabel;b.onclick=open;this.appendChild(b);}});
