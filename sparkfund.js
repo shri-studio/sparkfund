@@ -451,4 +451,4 @@
   }
 
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',init):init();
-})();
+})();// v3.1 - modal fix
